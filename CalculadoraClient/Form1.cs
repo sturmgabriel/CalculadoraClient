@@ -27,9 +27,9 @@ namespace CalculadoraClient
             string strValor2 = text2.ToString();
             string operador = comboBox1.ToString();
 
-            string strValor1_cripto = criptografar(strValor1);
-            string strValor2_cripto = criptografar(strValor2);
-            string operador_cripto = criptografar(operador);
+            string strValor1_cripto = Criptografar(strValor1);
+            string strValor2_cripto = Criptografar(strValor2);
+            string operador_cripto = Criptografar(operador);
 
             string strValor1_bin = binarizar(strValor1_cripto);
             string strValor2_bin = binarizar(strValor2_cripto);
@@ -40,13 +40,72 @@ namespace CalculadoraClient
         {
             throw new NotImplementedException();
         }
-
-        private string criptografar(string strValor1)
+        
+        private string Criptografar(string valor)
         {
-            throw new NotImplementedException();
+            int numero = valor.Length;
+
+            char[] letras = new char[numero];
+            string[] letrascript = new string[numero];
+
+            letras = valor.ToCharArray();
+
+
+            for (int i = 0; i < letras.Length; i++)
+            {
+                for (int j = 0; j < original.Length; j++)
+                {
+                    if (Convert.ToString(letras[i]) == original[j])
+                    {
+                        letrascript[i] = cripto[j];
+                    }
+                }
+
+            }
+
+            string palavracripto = "";
+
+            foreach (var item in letrascript)
+            {
+                palavracripto = palavracripto + "" + item;
+            }
+
+            return palavracripto;
+
         }
-        
-        
+
+        private static void decriptografar(string valor)
+        {
+            int numero = valor.Length;
+
+            char[] letras = new char[numero];
+            string[] letrascript = new string[numero];
+
+            letras = valor.ToCharArray();
+
+
+            for (int i = 0; i < letras.Length; i++)
+            {
+                for (int j = 0; j < original.Length; j++)
+                {
+                    if (Convert.ToString(letras[i]) == cripto[j])
+                    {
+                        letrascript[i] = original[j];
+                    }
+                }
+
+            }
+
+            string palavracripto = "";
+
+            foreach (var item in letrascript)
+            {
+                palavracripto = palavracripto + "" + item;
+            }
+
+            Console.WriteLine(palavracripto);
+        }
+
 
     }
 }
