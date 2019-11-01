@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,9 +14,9 @@ namespace CalculadoraClient
 {
     public partial class Form1 : Form
     {
-        static string[] original = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "*", "/", "="};
+        static string[] original = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "*", "/", "=", ","};
 
-        static string[] cripto = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"};
+        static string[] cripto = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"};
 
         string strValor1_Retorno;
         string operador_Retorno;
@@ -30,8 +31,8 @@ namespace CalculadoraClient
         #region Envio
         private void button1_Click(object sender, EventArgs e)
         {
-            string strValor1 = text1.ToString();
-            string strValor2 = text2.ToString();
+            string strValor1 = text1.Text.ToString();
+            string strValor2 = text2.Text.ToString();
             string operador = comboBox1.SelectedItem.ToString();
 
             string strValor1_cripto = Criptografar(strValor1);
@@ -188,5 +189,16 @@ namespace CalculadoraClient
         }
 
         #endregion
+
+
+        private void text1_TextChanged(object sender, EventArgs e)
+        {
+            text1.Text = Regex.Replace(text1.Text, "[^0-9^,]", "");
+        }
+
+        private void text2_TextChanged(object sender, EventArgs e)
+        {
+            text1.Text = Regex.Replace(text1.Text, "[^0-9^,]", "");
+        }
     }
 }
