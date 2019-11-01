@@ -17,6 +17,11 @@ namespace CalculadoraClient
 
         static string[] cripto = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"};
 
+        string strValor1_Retorno;
+        string operador_Retorno;
+        string strValor2_Retorno;
+        string resultado_Retorno;
+
         public Form1()
         {
             InitializeComponent();
@@ -43,7 +48,7 @@ namespace CalculadoraClient
 
         private void gerarArquivoEnvio(string strValor1_bin, string strValor2_bin, string operador_bin)
         {
-            string nomeArquivo = @"C:\temp\envio.txt";
+            string nomeArquivo = @"C:\temp\Envio.txt";
 
             StreamWriter writer = new StreamWriter(nomeArquivo);
 
@@ -110,21 +115,17 @@ namespace CalculadoraClient
         {
             lerArquivoResposta();
 
-            string strValor1 = ""; //valor vindo do arquivo 
-            string strValor2 = ""; //valor vindo do arquivo
-            string operador = ""; //valor vindo do arquivo
-            string resultado = ""; //valor vindo do arquivo
-
-            string strValor1_debin = Debinarizar(strValor1);
-            string strValor2_debin = Debinarizar(strValor2);
-            string operador_debin = Debinarizar(operador);
-            string resultado_debin = Debinarizar(resultado);
+            string strValor1_debin = Debinarizar(strValor1_Retorno);
+            string strValor2_debin = Debinarizar(strValor2_Retorno);
+            string operador_debin = Debinarizar(operador_Retorno);
+            string resultado_debin = Debinarizar(resultado_Retorno);
 
             string strValor1_decripto = Decriptografar(strValor1_debin);
             string strValor2_decripto = Decriptografar(strValor2_debin);
             string operador_decripto = Decriptografar(operador_debin);
             string resultado_decripto = Decriptografar(resultado_debin);
 
+            label4.Text = "Resultado: " + strValor1_decripto + " " + operador_decripto + " " + strValor2_decripto + " = " + resultado_decripto;
 
         }
 
@@ -177,7 +178,13 @@ namespace CalculadoraClient
 
         private void lerArquivoResposta()
         {
-            throw new NotImplementedException();
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Temp\Retorno.txt");
+            
+            strValor1_Retorno = Convert.ToString(lines[0]);
+            operador_Retorno = Convert.ToString(lines[1]);
+            strValor2_Retorno = Convert.ToString(lines[2]);
+            resultado_Retorno = Convert.ToString(lines[3]);
+            
         }
 
         #endregion
