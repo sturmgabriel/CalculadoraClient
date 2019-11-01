@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,12 @@ namespace CalculadoraClient
             InitializeComponent();
         }
 
+        #region Envio
         private void button1_Click(object sender, EventArgs e)
         {
             string strValor1 = text1.ToString();
             string strValor2 = text2.ToString();
-            string operador = comboBox1.ToString();
+            string operador = comboBox1.SelectedItem.ToString();
 
             string strValor1_cripto = Criptografar(strValor1);
             string strValor2_cripto = Criptografar(strValor2);
@@ -41,12 +43,31 @@ namespace CalculadoraClient
 
         private void gerarArquivoEnvio(string strValor1_bin, string strValor2_bin, string operador_bin)
         {
-            throw new NotImplementedException();
+            string nomeArquivo = @"C:\temp\envio.txt";
+
+            StreamWriter writer = new StreamWriter(nomeArquivo);
+
+            writer.WriteLine(strValor1_bin);
+            writer.WriteLine(operador_bin);
+            writer.WriteLine(strValor2_bin);
+            writer.Close();
+
         }
 
         private string binarizar(string strValor1_cripto)
         {
-            throw new NotImplementedException();
+            int[] numeros = new int[5];
+
+            string ret = "";
+
+            foreach (char c in strValor1_cripto)
+            {
+                int asc = (int)c;
+
+                ret += Convert.ToString(asc, 2) + " ";
+            }
+
+            return (ret);
         }
         
         private string Criptografar(string valor)
@@ -81,7 +102,10 @@ namespace CalculadoraClient
             return palavracripto;
 
         }
-        
+
+        #endregion
+
+        #region Retorno
         private void button2_Click(object sender, EventArgs e)
         {
             lerArquivoResposta();
@@ -106,7 +130,17 @@ namespace CalculadoraClient
 
         private string Debinarizar(string strValor1_cripto)
         {
-            throw new NotImplementedException();
+            string[] strBin = strValor1_cripto.Trim().Split(' ');
+            string rec = "";
+
+            foreach (string ele in strBin)
+            {
+                char car = (char)Convert.ToInt32(ele, 2);
+
+                rec += car;
+            }
+            
+            return rec;
         }
 
         private string Decriptografar(string strValor1)
@@ -145,5 +179,7 @@ namespace CalculadoraClient
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
