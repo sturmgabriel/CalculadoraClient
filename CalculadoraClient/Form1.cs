@@ -49,6 +49,19 @@ namespace CalculadoraClient
 
         private void gerarArquivoEnvio(string strValor1_bin, string strValor2_bin, string operador_bin)
         {
+            if (System.IO.File.Exists(@"C:\temp\Envio.txt"))
+            {
+                try
+                {
+                    System.IO.File.Delete(@"C:\temp\Envio.txt");
+                }
+                catch (System.IO.IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+            }
+
             string nomeArquivo = @"C:\temp\Envio.txt";
 
             StreamWriter writer = new StreamWriter(nomeArquivo);
@@ -198,7 +211,7 @@ namespace CalculadoraClient
 
         private void text2_TextChanged(object sender, EventArgs e)
         {
-            text1.Text = Regex.Replace(text1.Text, "[^0-9^,]", "");
+            text2.Text = Regex.Replace(text2.Text, "[^0-9^,]", "");
         }
     }
 }
